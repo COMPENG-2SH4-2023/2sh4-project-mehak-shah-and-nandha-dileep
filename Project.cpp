@@ -5,7 +5,9 @@
 
 using namespace std;
 
-#define DELAY_CONST 100000
+# define DELAY_CONST 100000
+# define ROW_SIZE 18 // y-coordinates
+# define COL_SIZE 36 // x-coordinates
 
 bool exitFlag;
 
@@ -56,7 +58,21 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen(); 
+    
+    /*// Builds game board
+    for (i = 0; i < ROW_SIZE; i++){
+        for (j = 0; j < COL_SIZE; j++){
+            if (i == 0 || i == (ROW_SIZE - 1) || j == 0 || j == (COL_SIZE - 1))
+            {
+                gameBoard[i][j] = '#';
+            }
+            else
+            {
+                gameBoard[i][j] = ' ';
+            }
+        }
+    }  */ 
 
 }
 

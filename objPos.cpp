@@ -1,5 +1,7 @@
 #include "objPos.h"
 
+// DO NOT TOUCH - Already full implemented
+
 objPos::objPos()
 {
     x = 0;

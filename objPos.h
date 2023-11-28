@@ -1,6 +1,8 @@
 #ifndef OBJPOS_H
 #define OBJPOS_H
 
+// DO NOT TOUCH - Already full implemented
+
 class objPos
 {
     public:
