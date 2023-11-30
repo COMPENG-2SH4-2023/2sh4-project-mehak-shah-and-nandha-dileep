@@ -6,8 +6,11 @@
 using namespace std;
 
 # define DELAY_CONST 100000
-# define ROW_SIZE 18 // y-coordinates
-# define COL_SIZE 36 // x-coordinates
+//# define ROW_SIZE 18 // y-coordinates
+//# define COL_SIZE 36 // x-coordinates
+
+GameMechs* myGM;
+Player* myPlayer;
 
 bool exitFlag;
 
@@ -53,7 +56,8 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    
+    myPlayer->updatePlayerDir();
+    myPlayer->movePlayer();
 }
 
 void DrawScreen(void)
@@ -74,6 +78,29 @@ void DrawScreen(void)
         }
     }  */ 
 
+    int i, j;
+    for (i = 0; i < myGM->getBoardSizeY(); i++) {
+        for (j = 0; j < myGM->getBoardSizeX(); j++) {
+    //  3. For every visited character location on the game board
+    //      If on border on the game board, print a special character
+            if (i == 0 || i == myGM->getBoardSizeY() - 1 || j == 0 || j == myGM->getBoardSizeX() - 1) 
+            {
+                MacUILib_printf("#");
+    //          If at the player object position, print the player symbol
+            } 
+            else if (i == tempPos.y && j == tempPos.x) 
+            { //the character key
+                MacUILib_printf("%c", tempPos.symbol);
+    //          Otherwise, print the space character
+            } 
+            else 
+            {
+                MacUILib_printf(" ");
+            }
+        }
+        MacUILib_printf("\n");
+    }
+
 }
 
 void LoopDelay(void)
@@ -87,4 +114,7 @@ void CleanUp(void)
     MacUILib_clearScreen();    
   
     MacUILib_uninit();
+
+    delete myGM;
+    delete myPlayer;
 }
