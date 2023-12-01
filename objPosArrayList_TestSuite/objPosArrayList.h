@@ -8,20 +8,23 @@
 class objPosArrayList
 {
     private:
-        objPos* aList;
-        int sizeList;
-        int sizeArray;
+        objPos* aList; // Heap data member
+                       // Points to the start of an objPos array list
+        int sizeList;  // Number of elements currently in list
+                       // NOTE: Points to the next position in the array
+        int sizeArray; // Total number of available array elements: (200) 
 
     public:
-        objPosArrayList();
-        ~objPosArrayList();
+        objPosArrayList(); // Default Constructor
+        ~objPosArrayList(); // Destructor
 
-        int getSize();
+        int getSize(); // Returns sizeList
         void insertHead(objPos thisPos);
         void insertTail(objPos thisPos);
         void removeHead();
         void removeTail();
         
+        // Other getters (pass-by-reference)
         void getHeadElement(objPos &returnPos);
         void getTailElement(objPos &returnPos);
         void getElement(objPos &returnPos, int index);

@@ -5,8 +5,8 @@
 
 objPosArrayList::objPosArrayList()
 {
-    sizeList = 0;
-    sizeArray = ARRAY_MAX_CAP;
+    sizeList = 0; // Points to the next position in the array
+    sizeArray = ARRAY_MAX_CAP; // sizeArray = 200
     aList = new objPos[ARRAY_MAX_CAP];
 }
 
@@ -22,6 +22,8 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
+    // Can't insert anything if the array is full. 
+    // Also protects against the case sizeList is negative
     if(sizeList >= sizeArray || sizeList < 0)
     {
         return;
@@ -37,6 +39,8 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
+    // Can't insert anything if the array is full. 
+    // Also protects against the case sizeList is negative
     if(sizeList >= sizeArray || sizeList < 0)
     {
         return;
@@ -48,6 +52,7 @@ void objPosArrayList::insertTail(objPos thisPos)
 
 void objPosArrayList::removeHead()
 {
+    // Can't remove elements if sizeList is negative or if the array contains no elements
     if(sizeList <= 0)
     {
         return;
@@ -62,6 +67,7 @@ void objPosArrayList::removeHead()
 
 void objPosArrayList::removeTail()
 {
+    // Can't remove elements if sizeList is negative or if the array contains no elements
     if(sizeList <= 0)
     {
         return;
@@ -69,6 +75,7 @@ void objPosArrayList::removeTail()
     sizeList--;
 }
 
+// Pass-by-value
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
     returnPos = aList[0];
@@ -81,5 +88,10 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
+    if (index < 0 || index >= sizeList)
+    {
+        return;
+    }
+    
     returnPos = aList[index];
 }
