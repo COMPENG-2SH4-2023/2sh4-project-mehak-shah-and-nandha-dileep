@@ -6,8 +6,6 @@
 using namespace std;
 
 # define DELAY_CONST 100000
-//# define ROW_SIZE 18 // y-coordinates
-//# define COL_SIZE 36 // x-coordinates
 
 GameMechs* myGM;
 Player* myPlayer;
