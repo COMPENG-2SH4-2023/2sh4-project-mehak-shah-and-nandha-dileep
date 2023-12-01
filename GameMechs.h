@@ -34,6 +34,7 @@ class GameMechs
         // Default Constructors
         GameMechs();
         GameMechs(int boardX, int boardY);
+        ~GameMechs();
         
         // Getters
         bool getExitFlagStatus();
@@ -48,7 +49,7 @@ class GameMechs
         void setLoseFlag();
         void setInput(char this_input);
         
-        // Additional Functions
+        // Additional Setter Functions
         void clearInput();
         void incrementScore();
       

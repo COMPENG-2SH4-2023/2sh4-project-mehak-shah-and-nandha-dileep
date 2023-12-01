@@ -1,8 +1,9 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 GameMechs::GameMechs()
 {
-    input = '\0';
+    input = 0;
     exitFlag = false;
     loseFlag = false;
     score = 0;
@@ -12,15 +13,20 @@ GameMechs::GameMechs()
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
+    input = 0;
+    exitFlag = false;
+    loseFlag = false;
+    score = 0;
+    
     boardSizeX = boardX;
     boardSizeY = boardY;
 }
 
 // do you need a destructor?
-/*GameMechs::~GameMechs()
+GameMechs::~GameMechs()
 {
-    delete GameMechs;
-}*/
+    //delete GameMechs;
+}
 
 // **GETTERS**
 bool GameMechs::getExitFlagStatus()
@@ -35,6 +41,10 @@ bool GameMechs::getLoseFlagStatus()
 
 char GameMechs::getInput()
 {
+    if (MacUILib_hasChar())
+    {
+        input = MacUILib_getChar();
+    }
     return input;
 }
 

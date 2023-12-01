@@ -1,16 +1,17 @@
 #include <iostream>
 #include "MacUILib.h"
-#include "objPos.h"
-
+#include "objPos.h" // fundamental building block for project.
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
-# define DELAY_CONST 100000
+# define DELAY_CONST 50000
 
 GameMechs* myGM;
 Player* myPlayer;
 
-bool exitFlag;
+// objPos myPos;
 
 void Initialize(void);
 void GetInput(void);
@@ -26,7 +27,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -44,37 +45,36 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    exitFlag = false;
+    //myPos.setObjPos(2, 3, '@);
+
+    myGM = new GameMechs(26, 13); // Set the board dimensions to 26 columns and 13 rows
+    myPlayer = new Player(myGM);
+    
 }
 
 void GetInput(void)
 {
-   
+
 }
 
 void RunLogic(void)
 {
-    myPlayer->updatePlayerDir();
+    // In Player.cpp, updatePlayerDir() gets char input from GameMechs and updates direction
+    myPlayer->updatePlayerDir(); 
+
     myPlayer->movePlayer();
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen(); 
-    
-    /*// Builds game board
-    for (i = 0; i < ROW_SIZE; i++){
-        for (j = 0; j < COL_SIZE; j++){
-            if (i == 0 || i == (ROW_SIZE - 1) || j == 0 || j == (COL_SIZE - 1))
-            {
-                gameBoard[i][j] = '#';
-            }
-            else
-            {
-                gameBoard[i][j] = ' ';
-            }
-        }
-    }  */ 
+
+    //MacUILib_printf("Object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
+
+    objPos tempPos;
+    myPlayer->getPlayerPos(tempPos);
+
+    MacUILib_printf("Board size: %dx%d,\nPlayer Position: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
 
     int i, j;
     for (i = 0; i < myGM->getBoardSizeY(); i++) {
