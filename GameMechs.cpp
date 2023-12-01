@@ -82,7 +82,7 @@ void GameMechs::setInput(char this_input)
 // **ADDITIONAL FUNCTIONS**
 void GameMechs::clearInput()
 {
-    input = '\0';
+    input = 0;
 }
 
 void GameMechs::incrementScore()
