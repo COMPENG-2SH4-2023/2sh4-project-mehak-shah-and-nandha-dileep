@@ -9,6 +9,7 @@ objPosArrayList::objPosArrayList()
     sizeList = 0; // Points to the next position in the array
     sizeArray = ARRAY_MAX_CAP; // sizeArray = 200
     aList = new objPos[ARRAY_MAX_CAP];
+    arrayIncreaseTracker = 1; // Defaults to 1
 }
 
 objPosArrayList::~objPosArrayList()
@@ -27,7 +28,7 @@ void objPosArrayList::insertHead(objPos thisPos)
     if(sizeList >= sizeArray)
     {
         // Allocate memory for a new list
-        objPos* newList = new objPos[ARRAY_MAX_CAP + 50];
+        objPos* newList = new objPos[ARRAY_MAX_CAP + (ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker)];
 
         // Copy old list items into new list
         for (int i = 0; i < sizeList; i++)
@@ -40,6 +41,12 @@ void objPosArrayList::insertHead(objPos thisPos)
 
         // Update the pointer to point to the new array 
         aList = newList;
+
+        // Deallocate the memory of the new array
+        delete[] newList;
+
+        sizeArray += ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker; // Updates list size
+        arrayIncreaseTracker++; // Increase arrayIncreaseTracker count
     }
 
     for (int i = sizeList; i > 0; i--)
@@ -56,7 +63,7 @@ void objPosArrayList::insertTail(objPos thisPos)
     if(sizeList >= sizeArray)
     {
         // Allocate memory for a new list
-        objPos* newList = new objPos[ARRAY_MAX_CAP + 50];
+        objPos* newList = new objPos[ARRAY_MAX_CAP + (ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker)];
 
         // Copy old list items into new list
         for (int i = 0; i < sizeList; i++)
@@ -69,6 +76,12 @@ void objPosArrayList::insertTail(objPos thisPos)
 
         // Update the pointer to point to the new array 
         aList = newList;
+
+        // Deallocate the memory of the new array
+        delete[] newList;
+
+        sizeArray += ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker; // Updates list size
+        arrayIncreaseTracker++; // Increase arrayIncreaseTracker count
     }
 
     aList[sizeList].setObjPos(thisPos);  // Inserting the element at the tail, index: sizeList

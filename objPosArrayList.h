@@ -2,6 +2,7 @@
 #define OBJPOS_ARRAYLIST_H
 
 #define ARRAY_MAX_CAP 200
+#define ARRAY_INCREASE_AMOUNT 20
 
 #include "objPos.h"
 
@@ -11,6 +12,7 @@ class objPosArrayList
         objPos* aList;
         int sizeList;
         int sizeArray;
+        int arrayIncreaseTracker; 
 
     public:
         objPosArrayList();
