@@ -1,9 +1,10 @@
 #ifndef FOOD_H
-#define FOOD_H_H
+#define FOOD_H
 
-#include <cstdlib>  //not sure if i need this library
-#include <time.h> //not sure if i neeed this library
+#include <cstdlib>  
+#include <time.h> 
 
+#include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
 
@@ -13,14 +14,17 @@ class Food
 {
 
     public:
-        Food();
-        ~Player();
+        Food(GameMechs* thisGMRef);
+        ~Food();
 
         void generateFood(objPos blockOff);
         void getFoodPos(objPos &returnPos);
 
     private:
         objPos foodPos;
+
+        // Need a reference to the Main Game Mechanisms
+        GameMechs* mainGameMechsRef;
 };
 
 #endif
