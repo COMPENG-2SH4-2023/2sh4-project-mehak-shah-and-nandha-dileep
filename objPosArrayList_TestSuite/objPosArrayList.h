@@ -2,7 +2,7 @@
 #define OBJPOS_ARRAYLIST_H
 
 #define ARRAY_MAX_CAP 200
-#define ARRAY_INCREASE_AMOUNT 20
+#define ARRAY_INCREASE_AMOUNT 50
 
 #include "objPos.h"
 
@@ -14,7 +14,6 @@ class objPosArrayList
         int sizeList;  // Number of elements currently in list
                        // NOTE: Points to the next position in the array
         int sizeArray; // Total number of available array elements: (200) 
-        int arrayIncreaseTracker; // Tracks the number of increases to aList
 
     public:
         objPosArrayList(); // Default Constructor
