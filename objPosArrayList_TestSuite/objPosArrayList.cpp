@@ -41,10 +41,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         // Update the pointer to point to the new array 
         aList = newList;
 
-        // Deallocate the memory of the new array
-        delete[] newList;
-
-        sizeArray += ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker; // Updates list size
+        sizeArray = ARRAY_MAX_CAP + (ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker); // Updates list size
         arrayIncreaseTracker++; // Increase arrayIncreaseTracker count
     }
 
@@ -76,10 +73,7 @@ void objPosArrayList::insertTail(objPos thisPos)
         // Update the pointer to point to the new array 
         aList = newList;
 
-        // Deallocate the memory of the new array
-        delete[] newList;
-
-        sizeArray += ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker; // Updates list size
+        sizeArray = ARRAY_MAX_CAP + (ARRAY_INCREASE_AMOUNT*arrayIncreaseTracker); // Updates list size
         arrayIncreaseTracker++; // Increase arrayIncreaseTracker count
     }
 
