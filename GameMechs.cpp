@@ -44,6 +44,11 @@ char GameMechs::getInput()
     if (MacUILib_hasChar())
     {
         input = MacUILib_getChar();
+        if (input == '!')
+        {
+            exitFlag = true;
+            return 0;
+        }
     }
     return input;
 }

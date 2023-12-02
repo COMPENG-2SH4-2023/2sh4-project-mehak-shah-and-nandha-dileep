@@ -6,7 +6,7 @@
 
 using namespace std;
 
-# define DELAY_CONST 50000
+# define DELAY_CONST 100000
 
 GameMechs* myGM;
 Player* myPlayer;
@@ -47,22 +47,22 @@ void Initialize(void)
 
     //myPos.setObjPos(2, 3, '@);
 
-    myGM = new GameMechs(26, 13); // Set the board dimensions to 26 columns and 13 rows
+    myGM = new GameMechs(); // Set the board dimensions to 30x15
     myPlayer = new Player(myGM);
-    
 }
 
 void GetInput(void)
 {
-
+    myGM->getInput();
 }
 
 void RunLogic(void)
 {
     // In Player.cpp, updatePlayerDir() gets char input from GameMechs and updates direction
     myPlayer->updatePlayerDir(); 
-
     myPlayer->movePlayer();
+
+    //myGM->clearInput(); // To prevent repeating input
 }
 
 void DrawScreen(void)
@@ -74,11 +74,11 @@ void DrawScreen(void)
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos);
 
-    MacUILib_printf("Board size: %dx%d,\nPlayer Position: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
-
     int i, j;
-    for (i = 0; i < myGM->getBoardSizeY(); i++) {
-        for (j = 0; j < myGM->getBoardSizeX(); j++) {
+    for (i = 0; i < myGM->getBoardSizeY(); i++) 
+    {
+        for (j = 0; j < myGM->getBoardSizeX(); j++) 
+        {
     //  3. For every visited character location on the game board
     //      If on border on the game board, print a special character
             if (i == 0 || i == myGM->getBoardSizeY() - 1 || j == 0 || j == myGM->getBoardSizeX() - 1) 
@@ -99,6 +99,8 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
+    MacUILib_printf("Board size: %dx%d,\nPlayer Position: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
+
 }
 
 void LoopDelay(void)
@@ -110,9 +112,9 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
-  
     MacUILib_uninit();
-
+    
+    // Remove heap instances
     delete myGM;
     delete myPlayer;
 }
