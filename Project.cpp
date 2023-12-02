@@ -3,6 +3,7 @@
 #include "objPos.h" // fundamental building block for project.
 #include "GameMechs.h"
 #include "Player.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -10,8 +11,7 @@ using namespace std;
 
 GameMechs* myGM;
 Player* myPlayer;
-
-// objPos myPos;
+Food* myFood;
 
 void Initialize(void);
 void GetInput(void);
@@ -45,10 +45,13 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    //myPos.setObjPos(2, 3, '@);
-
     myGM = new GameMechs(); // Set the board dimensions to 30x15
     myPlayer = new Player(myGM);
+    myFood = new Food(myGM);
+
+    //generating initial food
+    objPos blockOff; //assuming that there is no blockOff initially
+    myFood->generateFood(blockOff);
 }
 
 void GetInput(void)
@@ -62,6 +65,10 @@ void RunLogic(void)
     myPlayer->updatePlayerDir(); 
     myPlayer->movePlayer();
 
+    objPos tempPos;
+    myPlayer->getPlayerPos(tempPos);
+    myFood->generateFood(tempPos);
+
     //myGM->clearInput(); // To prevent repeating input
 }
 
@@ -73,6 +80,9 @@ void DrawScreen(void)
 
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos);
+
+    objPos foodPos;
+    myFood->getFoodPos(foodPos);
 
     int i, j;
     for (i = 0; i < myGM->getBoardSizeY(); i++) 
@@ -89,6 +99,11 @@ void DrawScreen(void)
             else if (i == tempPos.y && j == tempPos.x) 
             { //the character key
                 MacUILib_printf("%c", tempPos.symbol);
+    //          Otherwise, print the space character
+            } 
+            else if (i == foodPos.y && j == foodPos.x) 
+            { //the character key
+                MacUILib_printf("%c", foodPos.symbol);
     //          Otherwise, print the space character
             } 
             else 
@@ -117,4 +132,5 @@ void CleanUp(void)
     // Remove heap instances
     delete myGM;
     delete myPlayer;
+    delete myFood;
 }
