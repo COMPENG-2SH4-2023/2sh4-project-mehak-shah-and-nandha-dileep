@@ -22,31 +22,55 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    // Can't insert anything if the array is full. 
-    // Also protects against the case sizeList is negative
-    if(sizeList >= sizeArray || sizeList < 0)
+    // Create new (larger) array if the current array is full. 
+    if(sizeList >= sizeArray)
     {
-        return;
+        // Allocate memory for a new list
+        objPos* newList = new objPos[ARRAY_MAX_CAP + 50];
+
+        // Copy old list items into new list
+        for (int i = 0; i < sizeList; i++)
+        {
+            newList[i] = aList[i];
+        }
+
+        // Deallocate the memory of the old array
+        delete[] aList;
+
+        // Update the pointer to point to the new array 
+        aList = newList;
     }
 
     for (int i = sizeList; i > 0; i--)
     {
-        aList[i] = aList[i-1];  // Shiting all elements towards the tail to create space at the head
+        aList[i].setObjPos(aList[i-1]);  // Shiting all elements towards the tail to create space at the head
     }
-    aList[0] = thisPos; // Inserting the element at the head, index: 0
+    aList[0].setObjPos(thisPos); // Inserting the element at the head, index: 0
     sizeList++;
 }
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    // Can't insert anything if the array is full. 
-    // Also protects against the case sizeList is negative
-    if(sizeList >= sizeArray || sizeList < 0)
+    // Create new (larger) array if the current array is full. 
+    if(sizeList >= sizeArray)
     {
-        return;
+        // Allocate memory for a new list
+        objPos* newList = new objPos[ARRAY_MAX_CAP + 50];
+
+        // Copy old list items into new list
+        for (int i = 0; i < sizeList; i++)
+        {
+            newList[i] = aList[i];
+        }
+
+        // Deallocate the memory of the old array
+        delete[] aList;
+
+        // Update the pointer to point to the new array 
+        aList = newList;
     }
 
-    aList[sizeList] = thisPos;  // Inserting the element at the tail, index: sizeList
+    aList[sizeList].setObjPos(thisPos);  // Inserting the element at the tail, index: sizeList
     sizeList++;
 }
 
@@ -60,7 +84,7 @@ void objPosArrayList::removeHead()
 
     for(int i = 0; i < sizeList - 1; i++)
     {
-        aList[i] = aList[i+1];
+        aList[i].setObjPos(aList[i+1]);
     }
     sizeList--;
 }
@@ -78,12 +102,12 @@ void objPosArrayList::removeTail()
 // Pass-by-value
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
-    returnPos = aList[0];
+    returnPos.setObjPos(aList[0]);
 }
 
 void objPosArrayList::getTailElement(objPos &returnPos)
 {
-    returnPos = aList[sizeList - 1];
+    returnPos.setObjPos(aList[sizeList - 1]);
 }
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
@@ -93,5 +117,5 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
         return;
     }
     
-    returnPos = aList[index];
+    returnPos.setObjPos(aList[index]);
 }
