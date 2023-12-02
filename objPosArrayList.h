@@ -12,7 +12,6 @@ class objPosArrayList
         objPos* aList;
         int sizeList;
         int sizeArray;
-        int arrayIncreaseTracker; 
 
     public:
         objPosArrayList();

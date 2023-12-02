@@ -26,7 +26,7 @@ void objPosArrayList::insertHead(objPos thisPos)
     if(sizeList >= sizeArray)
     {
         // Allocate memory for a new list
-        objPos* newList = new objPos[sizeList + ARRAY_INCREASE_AMOUNT];
+        objPos* newList = new objPos[sizeArray + ARRAY_INCREASE_AMOUNT];
 
         // Copy old list items into new list
         for (int i = 0; i < sizeList; i++)
@@ -40,7 +40,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         // Update the pointer to point to the new array 
         aList = newList;
 
-        sizeArray = sizeList + ARRAY_INCREASE_AMOUNT; // Updates list size
+        sizeArray = sizeArray + ARRAY_INCREASE_AMOUNT; // Updates list size
     }
 
     for (int i = sizeList; i > 0; i--)
@@ -57,7 +57,7 @@ void objPosArrayList::insertTail(objPos thisPos)
     if(sizeList >= sizeArray)
     {
         // Allocate memory for a new list
-        objPos* newList = new objPos[sizeList + ARRAY_INCREASE_AMOUNT];
+        objPos* newList = new objPos[sizeArray + ARRAY_INCREASE_AMOUNT];
 
         // Copy old list items into new list
         for (int i = 0; i < sizeList; i++)
@@ -71,7 +71,7 @@ void objPosArrayList::insertTail(objPos thisPos)
         // Update the pointer to point to the new array 
         aList = newList;
 
-        sizeArray = sizeList + ARRAY_INCREASE_AMOUNT; // Updates list size
+        sizeArray = sizeArray + ARRAY_INCREASE_AMOUNT; // Updates list size
     }
 
     aList[sizeList].setObjPos(thisPos);  // Inserting the element at the tail, index: sizeList
