@@ -17,8 +17,11 @@ class Food
         Food(GameMechs* thisGMRef);
         ~Food();
 
-        void generateFood(objPos blockOff);
-        void getFoodPos(objPos &returnPos);
+        void generateFood(objPos blockOff); // Upgrade this to objPosArrayList
+        //Need to accept the player body array list 
+        // Go through each array list element to make sure they are all blocked off from random food generation
+
+        void getFoodPos(objPos &returnPos); // This too
 
     private:
         objPos foodPos;

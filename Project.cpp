@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h" // fundamental building block for project.
+#include "objPosArrayList.h"
 #include "GameMechs.h"
 #include "Player.h"
 #include "Food.h"
@@ -50,8 +51,8 @@ void Initialize(void)
     myFood = new Food(myGM);
 
     //generating initial food
-    objPos blockOff; //assuming that there is no blockOff initially
-    myFood->generateFood(blockOff);
+    objPos blockOff = {1, 1, '*'}; //assuming that there is no blockOff initially
+    myFood->generateFood(blockOff); // Turn into arrayList operation
 }
 
 void GetInput(void)
@@ -84,35 +85,48 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen(); 
 
-    //MacUILib_printf("Object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
+    bool drawn;
 
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos);
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    objPos tempBody;
 
     objPos foodPos;
     myFood->getFoodPos(foodPos);
 
-    int i, j;
-    for (i = 0; i < myGM->getBoardSizeY(); i++) 
+    for (int i = 0; i < myGM->getBoardSizeY(); i++) 
     {
-        for (j = 0; j < myGM->getBoardSizeX(); j++) 
+        for (int j = 0; j < myGM->getBoardSizeX(); j++) 
         {
-    //  3. For every visited character location on the game board
-    //      If on border on the game board, print a special character
+            drawn = false;
+            
+            // Iterate through every element in the playerBody list
+            for (int k = 0; k < playerBody->getSize(); k++)
+            {
+                playerBody->getElement(tempBody, k);
+                if (tempBody.x == j && tempBody.y == i)
+                {
+                    MacUILib_printf("%c", tempBody.symbol);
+                    drawn = true;
+                    break;
+                }
+            }
+
+            // If playerBody was drawn, don't draw anything below
+            if (drawn){
+                continue;
+            }
+
+//          3. For every visited character location on the game board
+//          If on border on the game board, print a special character
             if (i == 0 || i == myGM->getBoardSizeY() - 1 || j == 0 || j == myGM->getBoardSizeX() - 1) 
             {
                 MacUILib_printf("#");
-    //          If at the player object position, print the player symbol
-            } 
-            else if (i == tempPos.y && j == tempPos.x) 
-            { //the character key
-                MacUILib_printf("%c", tempPos.symbol);
-    //          Otherwise, print the space character
+//          If at the player object position, print the player symbol
             } 
             else if (i == foodPos.y && j == foodPos.x) 
             { //the character key
                 MacUILib_printf("%c", foodPos.symbol);
-    //          Otherwise, print the space character
+//              Otherwise, print the space character
             } 
             else 
             {
@@ -123,7 +137,7 @@ void DrawScreen(void)
     }
 
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    MacUILib_printf("Board size: %dx%d,\nPlayer Position: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
+    //MacUILib_printf("Board size: %dx%d,\nPlayer Position: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
 
 }
 
