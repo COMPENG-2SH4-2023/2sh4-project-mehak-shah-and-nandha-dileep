@@ -79,9 +79,10 @@ void RunLogic(void)
     {
         myGM->clearInput();
         myFood->generateFood(tempPos);
+        // Must block off entire tempPosList
     }
 
-    myGM->clearInput(); // To prevent repeating input
+    //myGM->clearInput(); // To prevent repeating input
 }
 
 void DrawScreen(void)
