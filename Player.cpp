@@ -1,10 +1,11 @@
 #include "Player.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* thisFood)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
+    foodRef = thisFood;
 
     // more actions to be included
     objPos tempPos; 
@@ -12,12 +13,6 @@ Player::Player(GameMechs* thisGMRef)
     
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
-
-    // For debugging purposes, insert another 4 heads
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    /*playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);*/
 }
 
 
@@ -114,25 +109,71 @@ void Player::movePlayer()
         default:
             break;
     }
-    // new current head should be inserted to the head of the list,
-    playerPosList->insertHead(currentHead);
-
-    // then remove tail
-    playerPosList->removeTail();
+    
+    // Check if the new head position overlaps with food
+    if (checkFoodComsumption() == 1)
+    {
+        // If yes, increase player length and generate new food
+        increasePlayerLength();
+    }
+    else
+    {
+        // If no, carry out regular insert + remove to complete the snake movement
+        playerPosList->insertHead(currentHead);
+        playerPosList->removeTail();
+    }
 }
 
-// Additional Functions
-/*bool Player:: checkFoodComsumption()
-{
+// Need more actions in here:
+        /* After inserting the head but before removing the tail 
+           - check new head position collides with food 
+           - if yes, incremente the score in GM and generate new food. do not remove the tail 
+           - otherwise, remove tail and move on
+           
+           
+        Lastly, add self-collision check.
+        - if self-collided 
+            set loseFlag and exitFlag to true (through GM), 
+            this will break the program loop and end the game
+        - if ending, you need to differentiate the end game stakes
+            LOST - display LOST message otherwise, 
+            display ENDGAME message only
+        */
 
+// Additional Functions
+bool Player:: checkFoodComsumption()
+{
+    objPos tempHead;
+    playerPosList->getHeadElement(tempHead);
+
+    objPos foodPos;
+    foodRef->getFoodPos(foodPos);
+
+    if (tempHead.isPosEqual(&foodPos)) {
+        return true;
+    }
+
+    return false;
 }
 
 void Player::increasePlayerLength()
 {
+    // Get the  position of the player's body
+    objPos bodyPos;
+    playerPosList->getHeadElement(bodyPos);
+
+    // Insert a new head at the body position
+    playerPosList->insertHead(bodyPos);
+
+    foodRef->generateFood(*playerPosList);
+
+    mainGameMechsRef->incrementScore();
 
 }
 
+/*
 bool Player::checkSelfCollision()
 {
 
-}*/
+}
+*/

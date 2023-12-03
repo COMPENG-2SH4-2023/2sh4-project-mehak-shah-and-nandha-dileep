@@ -47,12 +47,12 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     myGM = new GameMechs(); // Set the board dimensions to 30x15
-    myPlayer = new Player(myGM);
     myFood = new Food(myGM);
+    myPlayer = new Player(myGM, myFood);
 
     //generating initial food
     // For testing purposes only to be removed afterwards
-    objPos blockOff; //assuming that there is no blockOff initially
+    objPosArrayList blockOff; //assuming there is no blockoff initailly
     myFood->generateFood(blockOff); // Turn into arrayList operation
 }
 
@@ -72,17 +72,7 @@ void RunLogic(void)
     objPos tempPos;
     tempPosList->getHeadElement(tempPos);
 
-    char input;
-    input = myGM->getInput();
-
-    if (input == ' ')
-    {
-        myGM->clearInput();
-        myFood->generateFood(tempPos);
-        // Must block off entire tempPosList
-    }
-
-    //myGM->clearInput(); // To prevent repeating input
+    myGM->clearInput(); // To prevent repeating input
 }
 
 void DrawScreen(void)
@@ -113,10 +103,11 @@ void DrawScreen(void)
                     drawn = true;
                     break;
                 }
-            }
 
+            }
             // If playerBody was drawn, don't draw anything below
-            if (drawn){
+            if (drawn)
+            {
                 continue;
             }
 
