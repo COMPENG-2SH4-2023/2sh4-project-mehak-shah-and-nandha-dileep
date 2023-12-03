@@ -623,9 +623,11 @@ void getElement_testAccessOutOfBounds()
 	thisList.insertTail(tailPos);
 
 	objPos expectedPos;
+
 	// Test case checks if getElement silently fails when trying to access an out-of-bounds index 
 	// Compares the result with a default-constructed objPos object, indicating that the element was not assigned 
-    ASSERT_EQUAL(true, expectedPos.isPosEqual(&currentPos));
+    thisList.getElement(currentPos, 10);
+	ASSERT_EQUAL(true, expectedPos.isPosEqual(&currentPos));
 }
 
 
