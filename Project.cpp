@@ -67,7 +67,15 @@ void RunLogic(void)
 
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos);
-    myFood->generateFood(tempPos);
+
+    char input;
+    input = myGM->getInput();
+
+    if (input == ' ')
+    {
+        myGM->clearInput();
+        myFood->generateFood(tempPos);
+    }
 
     //myGM->clearInput(); // To prevent repeating input
 }
