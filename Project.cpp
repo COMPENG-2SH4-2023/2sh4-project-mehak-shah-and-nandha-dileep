@@ -51,7 +51,8 @@ void Initialize(void)
     myFood = new Food(myGM);
 
     //generating initial food
-    objPos blockOff = {1, 1, '*'}; //assuming that there is no blockOff initially
+    // For testing purposes only to be removed afterwards
+    objPos blockOff; //assuming that there is no blockOff initially
     myFood->generateFood(blockOff); // Turn into arrayList operation
 }
 
@@ -66,8 +67,10 @@ void RunLogic(void)
     myPlayer->updatePlayerDir(); 
     myPlayer->movePlayer();
 
+    objPosArrayList* tempPosList;
+    tempPosList = myPlayer->getPlayerPos();
     objPos tempPos;
-    myPlayer->getPlayerPos(tempPos);
+    tempPosList->getHeadElement(tempPos);
 
     char input;
     input = myGM->getInput();
@@ -78,7 +81,7 @@ void RunLogic(void)
         myFood->generateFood(tempPos);
     }
 
-    //myGM->clearInput(); // To prevent repeating input
+    myGM->clearInput(); // To prevent repeating input
 }
 
 void DrawScreen(void)
@@ -137,8 +140,13 @@ void DrawScreen(void)
     }
 
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    //MacUILib_printf("Board size: %dx%d,\nPlayer Position: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
-
+    MacUILib_printf("Player Positions:\n");
+    for (int l = 0; l < playerBody->getSize(); l++)
+    {
+        playerBody->getElement(tempBody, l);
+        MacUILib_printf("<%d, %d> ", tempBody.x, tempBody.y);
+    }
+    MacUILib_printf("\nFood Position: <%d, %d>\n", foodPos.x, foodPos.y);
 }
 
 void LoopDelay(void)

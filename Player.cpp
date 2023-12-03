@@ -14,9 +14,9 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList->insertHead(tempPos);
 
     // For debugging purposes, insert another 4 heads
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
     /*playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
     playerPosList->insertHead(tempPos);*/
 }
 
@@ -121,3 +121,18 @@ void Player::movePlayer()
     playerPosList->removeTail();
 }
 
+// Additional Functions
+/*bool Player:: checkFoodComsumption()
+{
+
+}
+
+void Player::increasePlayerLength()
+{
+
+}
+
+bool Player::checkSelfCollision()
+{
+
+}*/

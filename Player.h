@@ -38,6 +38,10 @@ class Player
             display ENDGAME message only
         */
 
+        bool checkFoodComsumption(); 
+        void increasePlayerLength(); 
+        bool checkSelfCollision();
+
     private:
         objPosArrayList *playerPosList;   // Upgrade this in iteration 3 to an AL.       
         enum Dir myDir;
