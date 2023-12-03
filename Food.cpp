@@ -4,6 +4,7 @@ Food::Food(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of gameboard
+    srand(time(NULL)); // Seed the random number generator //DOUBLE CHECK IF THIS IS THE RIGHT PLACE
 
 }
 
@@ -20,7 +21,6 @@ void Food::generateFood(objPosArrayList &playerPosList)
     //remember, in objPos class you have an isPosEqual() method. Use this instead of comparing element by element for your convenience
 
     foodPos.setObjPos(-1, -1, ' '); //clearing any food that was previously generated
-    srand(time(NULL)); // Seed the random number generator //DOUBLE CHECK IF THIS IS THE RIGHT PLACE
 
     while (true)
     {

@@ -130,19 +130,6 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
-    if (myGM->getExitFlagStatus())
-    {
-        if (myGM->getLoseFlagStatus())
-        {
-            // Player lost
-            MacUILib_printf("Game Over! You lost. Your score is %d!\n", myGM->getScore());
-        }
-        else
-        {
-            // Normal exit
-            MacUILib_printf("Game Over! You have exited the game. Your score is %d!\n", myGM->getScore());
-        }
-    }
 
     MacUILib_printf("INSTRUCTIONS: \n");
     MacUILib_printf("Press 'W' to go up.\nPress 'S' to go down.\nPress 'D' to go right.\nPress 'A' to go left.\n" );
@@ -169,8 +156,24 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen(); 
+
+    //Printing the exit messages after game exits
+    if (myGM->getExitFlagStatus())
+    {
+        if (myGM->getLoseFlagStatus())
+        {
+            // Player lost
+            MacUILib_printf("Game Over! You lost. Your score is %d!\n", myGM->getScore());
+        }
+        else
+        {
+            // Normal exit
+            MacUILib_printf("Game Over! You have exited the game. Your score is %d!\n", myGM->getScore());
+        }
+    }   
     MacUILib_uninit();
+
     
     // Remove heap instances
     delete myGM;
