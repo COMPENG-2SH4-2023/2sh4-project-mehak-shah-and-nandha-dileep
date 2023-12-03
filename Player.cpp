@@ -10,7 +10,6 @@ Player::Player(GameMechs* thisGMRef, Food* thisFood)
     // more actions to be included
     objPos tempPos; 
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() /2, mainGameMechsRef->getBoardSizeY() /2, '@');
-    
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
 }
@@ -121,6 +120,9 @@ void Player::movePlayer()
         // If no, carry out regular insert + remove to complete the snake movement
         playerPosList->insertHead(currentHead);
         playerPosList->removeTail();
+
+        // Check for self-collision
+        checkSelfCollision();
     }
 }
 
@@ -171,9 +173,27 @@ void Player::increasePlayerLength()
 
 }
 
-/*
+
 bool Player::checkSelfCollision()
 {
+    objPos tempHead;
+    playerPosList->getHeadElement(tempHead);
+
+    for (int i = 1; i < playerPosList->getSize(); i++)
+    {
+        objPos tempPos;
+        playerPosList->getElement(tempPos, i);
+
+        // Check if the head position collides with any element in the playerPosList
+        if (tempHead.isPosEqual(&tempPos))
+        {
+            // Collision detected, set lose flag and exit flag
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+            return true;
+        }
+    }
+
+    return false;
 
 }
-*/

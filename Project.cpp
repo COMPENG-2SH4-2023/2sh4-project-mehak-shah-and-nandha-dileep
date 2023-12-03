@@ -130,15 +130,35 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
+    if (myGM->getExitFlagStatus())
+    {
+        if (myGM->getLoseFlagStatus())
+        {
+            // Player lost
+            MacUILib_printf("Game Over! You lost. Your score is %d!\n", myGM->getScore());
+        }
+        else
+        {
+            // Normal exit
+            MacUILib_printf("Game Over! You have exited the game. Your score is %d!\n", myGM->getScore());
+        }
+    }
+
+    MacUILib_printf("INSTRUCTIONS: \n");
+    MacUILib_printf("Press 'W' to go up.\nPress 'S' to go down.\nPress 'D' to go right.\nPress 'A' to go left.\n" );
+    MacUILib_printf("Collect food (o) to grow longer, but avoid colliding with the snake's own body.\n");
+    MacUILib_printf("Press the key '!' to exit the game! \n\n");
 
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    MacUILib_printf("Player Positions:\n");
+    
+    /*MacUILib_printf("Player Positions:\n");
     for (int l = 0; l < playerBody->getSize(); l++)
     {
         playerBody->getElement(tempBody, l);
         MacUILib_printf("<%d, %d> ", tempBody.x, tempBody.y);
     }
     MacUILib_printf("\nFood Position: <%d, %d>\n", foodPos.x, foodPos.y);
+    */
 }
 
 void LoopDelay(void)
