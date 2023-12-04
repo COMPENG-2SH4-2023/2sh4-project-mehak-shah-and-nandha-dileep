@@ -16,7 +16,7 @@ Food::~Food()
 
 void Food::generateFood(objPosArrayList &playerPosList)
 {
-    
+    //always loops until x and y positions for food is valid
     while (true)
     {
         int x = (rand() % (mainGameMechsRef -> getBoardSizeX() - 2)) + 1; // Chooses between (1, boardSizeX - 1)
