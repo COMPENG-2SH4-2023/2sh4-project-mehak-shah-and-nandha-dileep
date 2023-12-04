@@ -1,6 +1,6 @@
 #include <iostream>
 #include "MacUILib.h"
-#include "objPos.h" // fundamental building block for project.
+#include "objPos.h"
 #include "objPosArrayList.h"
 #include "GameMechs.h"
 #include "Player.h"
@@ -10,6 +10,7 @@ using namespace std;
 
 # define DELAY_CONST 100000
 
+//declaring heap instances
 GameMechs* myGM;
 Player* myPlayer;
 Food* myFood;
@@ -50,10 +51,8 @@ void Initialize(void)
     myFood = new Food(myGM);
     myPlayer = new Player(myGM, myFood);
 
-    //generating initial food
-    // For testing purposes only to be removed afterwards
     objPosArrayList blockOff; //assuming there is no blockoff initailly
-    myFood->generateFood(blockOff); // Turn into arrayList operation
+    myFood->generateFood(blockOff);
 }
 
 void GetInput(void)
@@ -67,8 +66,11 @@ void RunLogic(void)
     myPlayer->updatePlayerDir(); 
     myPlayer->movePlayer();
 
+    // Get all of the positions of the player's body
     objPosArrayList* tempPosList;
     tempPosList = myPlayer->getPlayerPos();
+
+    // Get the  position of the player's head
     objPos tempPos;
     tempPosList->getHeadElement(tempPos);
 
@@ -87,6 +89,7 @@ void DrawScreen(void)
     objPos foodPos;
     myFood->getFoodPos(foodPos);
 
+    //iterating through every element of the gameboard
     for (int i = 0; i < myGM->getBoardSizeY(); i++) 
     {
         for (int j = 0; j < myGM->getBoardSizeX(); j++) 
@@ -97,6 +100,7 @@ void DrawScreen(void)
             for (int k = 0; k < playerBody->getSize(); k++)
             {
                 playerBody->getElement(tempBody, k);
+                //If at the player object position, print the player symbol
                 if (tempBody.x == j && tempBody.y == i)
                 {
                     MacUILib_printf("%c", tempBody.symbol);
@@ -111,17 +115,16 @@ void DrawScreen(void)
                 continue;
             }
 
-//          3. For every visited character location on the game board
-//          If on border on the game board, print a special character
+            //For every visited character location on the game board
+            //If on border on the game board, print a special character
             if (i == 0 || i == myGM->getBoardSizeY() - 1 || j == 0 || j == myGM->getBoardSizeX() - 1) 
             {
                 MacUILib_printf("#");
-//          If at the player object position, print the player symbol
             } 
             else if (i == foodPos.y && j == foodPos.x) 
             { //the character key
                 MacUILib_printf("%c", foodPos.symbol);
-//              Otherwise, print the space character
+            //Otherwise, print the space character
             } 
             else 
             {
@@ -137,26 +140,6 @@ void DrawScreen(void)
     MacUILib_printf("Press the key '!' to exit the game! \n\n");
 
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    
-    /*MacUILib_printf("Player Positions:\n");
-    for (int l = 0; l < playerBody->getSize(); l++)
-    {
-        playerBody->getElement(tempBody, l);
-        MacUILib_printf("<%d, %d> ", tempBody.x, tempBody.y);
-    }
-    MacUILib_printf("\nFood Position: <%d, %d>\n", foodPos.x, foodPos.y);
-    */
-}
-
-void LoopDelay(void)
-{
-    MacUILib_Delay(DELAY_CONST); // 0.1s delay
-}
-
-
-void CleanUp(void)
-{
-    MacUILib_clearScreen(); 
 
     //Printing the exit messages after game exits
     if (myGM->getExitFlagStatus())
@@ -172,6 +155,17 @@ void CleanUp(void)
             MacUILib_printf("Game Over! You have exited the game. Your score is %d!\n", myGM->getScore());
         }
     }   
+}
+
+void LoopDelay(void)
+{
+    MacUILib_Delay(DELAY_CONST); // 0.1s delay
+}
+
+
+void CleanUp(void)
+{
+    MacUILib_clearScreen(); 
     MacUILib_uninit();
 
     

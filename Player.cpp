@@ -3,13 +3,14 @@
 
 Player::Player(GameMechs* thisGMRef, Food* thisFood)
 {
+    //initializing food and gameMechanic references, and direction state
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
     foodRef = thisFood;
 
-    // more actions to be included
+    //intiatilizing player body
     objPos tempPos; 
-    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() /2, mainGameMechsRef->getBoardSizeY() /2, '@');
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '@');
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
 }
@@ -126,32 +127,21 @@ void Player::movePlayer()
     }
 }
 
-// Need more actions in here:
-        /* After inserting the head but before removing the tail 
-           - check new head position collides with food 
-           - if yes, incremente the score in GM and generate new food. do not remove the tail 
-           - otherwise, remove tail and move on
-           
-           
-        Lastly, add self-collision check.
-        - if self-collided 
-            set loseFlag and exitFlag to true (through GM), 
-            this will break the program loop and end the game
-        - if ending, you need to differentiate the end game stakes
-            LOST - display LOST message otherwise, 
-            display ENDGAME message only
-        */
-
 // Additional Functions
 bool Player:: checkFoodComsumption()
 {
+    // Get the  position of the player's head
     objPos tempHead;
     playerPosList->getHeadElement(tempHead);
 
+    // Get the  position of the food
     objPos foodPos;
     foodRef->getFoodPos(foodPos);
 
+
+    // Check if the head position is equal to any food position
     if (tempHead.isPosEqual(&foodPos)) {
+        // If a match is found, return true (food consumed)
         return true;
     }
 
@@ -176,9 +166,11 @@ void Player::increasePlayerLength()
 
 bool Player::checkSelfCollision()
 {
+    // Get the  position of the player's head
     objPos tempHead;
     playerPosList->getHeadElement(tempHead);
 
+    //iteration through all of the body's position
     for (int i = 1; i < playerPosList->getSize(); i++)
     {
         objPos tempPos;
