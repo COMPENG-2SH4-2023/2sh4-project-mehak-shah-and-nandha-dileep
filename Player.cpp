@@ -3,12 +3,12 @@
 
 Player::Player(GameMechs* thisGMRef, Food* thisFood)
 {
-    //initializing food and gameMechanic references, and direction state
+    // Initializing food and gameMechanic references, and direction state
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
     foodRef = thisFood;
 
-    //intiatilizing player body
+    // Intiatilizing player body
     objPos tempPos; 
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '@');
     playerPosList = new objPosArrayList();
@@ -18,22 +18,23 @@ Player::Player(GameMechs* thisGMRef, Food* thisFood)
 
 Player::~Player()
 {
-    // delete any heap members here
+    // Delete any heap members
     delete playerPosList;
 }
 
 objPosArrayList* Player::getPlayerPos()
 {
-    // return the reference to the playerPos arrray list
     return playerPosList;
 }
 
+// Processes input from user and updates snake directions (UP, DOWN, RIGHT and LEFT)
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic
+    // Gets user input
     char input;
     input = mainGameMechsRef->getInput();
 
+    // Updates direction
     switch(input)
     {                      
         case 'W':
@@ -69,13 +70,14 @@ void Player::updatePlayerDir()
     }
 }
 
+// Uses direction to update snake movement
 void Player::movePlayer()
 {
-    // PPA3 Finite State Machine logic
-
-    objPos currentHead; // Holds the pos information of the current head
+     // Holds the position information of snake head
+    objPos currentHead;
     playerPosList->getHeadElement(currentHead);
 
+    // Updates snake movement, accounting for boarders
     switch (myDir)
     {
         case UP:
@@ -110,7 +112,7 @@ void Player::movePlayer()
             break;
     }
     
-    // Check if the new head position overlaps with food
+    // Checks if the new head position overlaps with food
     if (checkFoodComsumption() == 1)
     {
         // If yes, increase player length and generate new food
@@ -118,7 +120,7 @@ void Player::movePlayer()
     }
     else
     {
-        // If no, carry out regular insert + remove to complete the snake movement
+        // Otherwise, carry out regular insert + remove to complete the snake movement
         playerPosList->insertHead(currentHead);
         playerPosList->removeTail();
 
@@ -138,7 +140,6 @@ bool Player:: checkFoodComsumption()
     objPos foodPos;
     foodRef->getFoodPos(foodPos);
 
-
     // Check if the head position is equal to any food position
     if (tempHead.isPosEqual(&foodPos)) {
         // If a match is found, return true (food consumed)
@@ -157,12 +158,10 @@ void Player::increasePlayerLength()
     // Insert a new head at the body position
     playerPosList->insertHead(bodyPos);
 
+    // Generate new food and increase user score
     foodRef->generateFood(*playerPosList);
-
     mainGameMechsRef->incrementScore();
-
 }
-
 
 bool Player::checkSelfCollision()
 {
@@ -185,7 +184,5 @@ bool Player::checkSelfCollision()
             return true;
         }
     }
-
     return false;
-
 }

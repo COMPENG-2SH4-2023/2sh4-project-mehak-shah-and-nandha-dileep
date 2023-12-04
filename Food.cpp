@@ -1,22 +1,21 @@
 #include "Food.h"
 
+
 Food::Food(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
-    foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of gameboard
-    srand(time(NULL)); // Seed the random number generator only once
-
+    foodPos.setObjPos(-1, -1, 'o'); // Initialize foodPos outside of Gameboard
+    srand(time(NULL)); // Seed the random number generator once
 }
 
-Food::~Food()
+/*Food::~Food()
 {
     // delete any heap members here
-}
-
+}*/
 
 void Food::generateFood(objPosArrayList &playerPosList)
 {
-    //always loops until x and y positions for food is valid
+    // Loops until x and y positions for food is valid
     while (true)
     {
         int x = (rand() % (mainGameMechsRef -> getBoardSizeX() - 2)) + 1; // Chooses between (1, boardSizeX - 1)
@@ -24,7 +23,7 @@ void Food::generateFood(objPosArrayList &playerPosList)
 
         foodPos.setObjPos(x, y, 'o');
 
-        //chekcing whether the food position is equal to the position of the player's body
+        // Checking whether the food position is equal to the position of the player's body
         bool overlap = false;
         for (int i = 0; i < playerPosList.getSize(); i++)
         {
@@ -41,11 +40,7 @@ void Food::generateFood(objPosArrayList &playerPosList)
         {
             break; // Valid position found, exit the loop
         }
-
-
     }
-
-
 }
 
 void Food::getFoodPos(objPos &returnPos)

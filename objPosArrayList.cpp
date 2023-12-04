@@ -1,14 +1,11 @@
 #include "objPosArrayList.h"
 
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.
 
 objPosArrayList::objPosArrayList()
 {
-    sizeList = 0; // Points to the next position in the array
-    sizeArray = ARRAY_MAX_CAP; // sizeArray = 200
-    aList = new objPos[ARRAY_MAX_CAP];
+    sizeList = 0; // Points to the next position in the array and holds the number of items in the array
+    sizeArray = ARRAY_MAX_CAP; // Holds the total size of the array, currently sizeArray = 200
+    aList = new objPos[ARRAY_MAX_CAP]; // Array
 }
 
 objPosArrayList::~objPosArrayList()
@@ -44,11 +41,14 @@ void objPosArrayList::insertHead(objPos thisPos)
         sizeArray = sizeArray + ARRAY_INCREASE_AMOUNT; // Updates list size
     }
 
+    // Shits all elements towards the tail to create space at the head
     for (int i = sizeList; i > 0; i--)
     {
-        aList[i].setObjPos(aList[i-1]);  // Shiting all elements towards the tail to create space at the head
+        aList[i].setObjPos(aList[i-1]);
     }
-    aList[0].setObjPos(thisPos); // Inserting the element at the head, index: 0
+
+    // Inserts the new element at the head, index: 0
+    aList[0].setObjPos(thisPos);
     sizeList++;
 }
 
@@ -75,18 +75,20 @@ void objPosArrayList::insertTail(objPos thisPos)
         sizeArray = sizeArray + ARRAY_INCREASE_AMOUNT; // Updates list size
     }
 
-    aList[sizeList].setObjPos(thisPos);  // Inserting the element at the tail, index: sizeList
+    // Inserts the new element at the tail, index: sizeList
+    aList[sizeList].setObjPos(thisPos);
     sizeList++;
 }
 
 void objPosArrayList::removeHead()
 {
-    // Can't remove elements if sizeList is negative or if the array contains no elements
+    // Can't remove elements if sizeList is negative or contains no elements
     if(sizeList <= 0)
     {
         return;
     }   
 
+    // Shifts all the elements to the left to remove head element
     for(int i = 0; i < sizeList - 1; i++)
     {
         aList[i].setObjPos(aList[i+1]);
@@ -104,7 +106,7 @@ void objPosArrayList::removeTail()
     sizeList--;
 }
 
-// Pass-by-value
+// Pass-by-value GETTERS
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
     returnPos.setObjPos(aList[0]);
@@ -117,6 +119,7 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
+    // If the index is out-of-bounds, do not return any value
     if (index < 0 || index >= sizeList)
     {
         return;

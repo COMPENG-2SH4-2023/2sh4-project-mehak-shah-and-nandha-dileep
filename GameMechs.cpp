@@ -17,15 +17,14 @@ GameMechs::GameMechs(int boardX, int boardY)
     exitFlag = false;
     loseFlag = false;
     score = 0;
-    
     boardSizeX = boardX;
     boardSizeY = boardY;
 }
 
-// do you need a destructor?
+// **DESTRUCTOR**
 GameMechs::~GameMechs()
 {
-    //delete GameMechs;
+
 }
 
 // **GETTERS**
@@ -44,7 +43,7 @@ char GameMechs::getInput()
     if (MacUILib_hasChar())
     {
         input = MacUILib_getChar();
-        if (input == '!')
+        if (input == '!') // Ends game when input = '!'
         {
             exitFlag = true;
             return 0;

@@ -21,12 +21,8 @@ class GameMechs
     private:
         char input; // Holds the most recent input collected via MacUILib_getChar()
         bool exitFlag;
-        bool loseFlag;
-        /*  - Records whether the player has lost the game (Snake eating into itself). 
-            - Flag should not be set to true if the player presses the exit key to terminate the game. 
-            - Use this flag to determine what messages to display at the end of the game.*/
+        bool loseFlag; // Records whether the player has lost the game (Snake eating into itself). 
         int score; // Holds the current score of the player
-        
         int boardSizeX;
         int boardSizeY;
 
@@ -52,8 +48,6 @@ class GameMechs
         // Additional Setter Functions
         void clearInput();
         void incrementScore();
-      
-
 };
 
 #endif

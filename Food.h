@@ -12,19 +12,16 @@ using namespace std;
 
 class Food
 {
-
     public:
         Food(GameMechs* thisGMRef);
-        ~Food();
+        //~Food();
 
         void generateFood(objPosArrayList &playerPosList);
-
         void getFoodPos(objPos &returnPos); 
 
     private:
         objPos foodPos;
-
-        // Need a reference to the Main Game Mechanisms
+        // Need a reference to the Main Game Mechanisms to access board dimensions
         GameMechs* mainGameMechsRef;
 };
 
